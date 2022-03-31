@@ -1,19 +1,21 @@
-public class Ferry implements Runnable {
-    private final int capLorry;
+public class Ferry {
+    private final int id;
     private final int tLorry;
-    private final int capFerry;
-    private final Thread[] thLorry;
+    private final int maxCap;
+    private int curCap;
 
-    public Ferry(int capLorry, int tLorry, int capFerry) {
-        this.capLorry = capLorry;
+    public Ferry(int id, int tLorry, int maxCap) {
+        this.id = id;
         this.tLorry = tLorry;
-        this.capFerry = capFerry;
-        this.thLorry = new Thread[capFerry];
+        this.maxCap = maxCap;
+        this.curCap = 0;
     }
 
+    public void load(int curCap) {
 
-    @Override
-    public void run() {
+    }
 
+    public boolean isFull() {
+        return true;
     }
 }

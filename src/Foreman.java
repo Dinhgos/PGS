@@ -10,15 +10,19 @@ public class Foreman {
     private int nMined = 0;
     private static int ores = 0;
     private final int tWorker;
+    private final Transport tr;
 
-    public Foreman(int cWorker, int tWorker) {
+    public Foreman(int cWorker, int tWorker, Transport tr) {
         this.data = new LinkedList<>();
         this.workers = new Worker[cWorker];
         this.thWorkers = new Thread[cWorker];
         this.tWorker = tWorker;
+        this.tr = tr;
     }
 
     public void getBlocks(String filePath) {
+        System.out.println("Foreman - Loading data.");
+
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -28,18 +32,18 @@ public class Foreman {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Could not read from file.");
+            System.out.println("Foreman - Could not read from file.");
             System.exit(1);
         }
 
-        System.out.println("Done loading data.");
+        System.out.println("Foreman - Done loading data.");
     }
 
     public void work() {
         System.out.println("Foreman - Creating workers");
 
         for (int i = 0; i < thWorkers.length; i++) {
-            workers[i] = new Worker(i, tWorker,this);
+            workers[i] = new Worker(i, tWorker,this, tr);
             thWorkers[i] = new Thread(workers[i]);
             thWorkers[i].start();
             System.out.println("Worker " + workers[i].getWorkerID() + " - started.");
