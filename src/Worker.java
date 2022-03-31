@@ -4,11 +4,15 @@ public class Worker implements Runnable {
     private final int id;
     private final int tWorker;
     private final Foreman foreman;
+    private final Transport tr;
+    // TODO make better lorry (spread to other workers)
+    private Lorry lorry;
 
-    public Worker(int id, int tWorker, Foreman foreman) {
+    public Worker(int id, int tWorker, Foreman foreman, Transport tr) {
         this.id = id;
         this.tWorker = tWorker;
         this.foreman = foreman;
+        this.tr = tr;
     }
 
     @Override
@@ -31,8 +35,13 @@ public class Worker implements Runnable {
                     e.printStackTrace();
                 }
             }
-            // TODO loading truck
+            // TODO loading lorry
             jobCount++;
+
+            for (int i = 0; i < job; i++) {
+                tr.loadLorry();
+            }
+
             foreman.reportResult(job, id);
             System.out.println("Worker " + id + " - Mined " + job + " ores.");
         }
