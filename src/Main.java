@@ -1,6 +1,4 @@
 public class Main {
-    // ref_input.txt test.txt
-    // TODO maybe not static
     private static String INPUT_FILE_NAME;
     private static String OUTPUT_FILE_NAME;
     private static int cWorker = -1;
@@ -8,20 +6,24 @@ public class Main {
     private static int capLorry = -1;
     private static int tLorry = -1;
     private static int capFerry = -1;
+    private static Data data;
+    private static long startTime;
 
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         loadInput(args);
         checkInputs();
 
+        data = new Data(OUTPUT_FILE_NAME, INPUT_FILE_NAME);
+        data.createFile();
+
         Transport tr = new Transport(capLorry,tLorry,capFerry);
-        //tr.work();
         Foreman foreman = new Foreman(cWorker,tWorker, tr);
-        foreman.getBlocks(INPUT_FILE_NAME);
+        foreman.getBlocks();
         foreman.work();
 
         long endTime = System.currentTimeMillis();
-        System.out.println("That took " + (endTime - startTime) + " milliseconds");
+        System.out.println("That took " + (endTime - startTime)/1000 + " seconds");
     }
 
     private static void checkInputs() {
@@ -32,24 +34,24 @@ public class Main {
         if (OUTPUT_FILE_NAME == null) {
             ss = true;
         }
-        if (cWorker == -1) {
+        if (cWorker < 1) {
             ss = true;
         }
-        if (tWorker == -1) {
+        if (tWorker < 1) {
             ss = true;
         }
-        if (capLorry == -1) {
+        if (capLorry < 1) {
             ss = true;
         }
-        if (tLorry == -1) {
+        if (tLorry < 1) {
             ss = true;
         }
-        if (capFerry == -1) {
+        if (capFerry < 1) {
             ss = true;
         }
 
         if (ss) {
-            System.out.println("Missing input");
+            System.out.println("Missing/Wrong input");
             System.exit(1);
         }
     }
@@ -84,5 +86,13 @@ public class Main {
         }
 
         return iNum;
+    }
+
+    public static Data getData() {
+        return data;
+    }
+
+    public static long getStartTime() {
+        return startTime;
     }
 }

@@ -1,10 +1,7 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.LinkedList;
 
 public class Foreman {
-    private final LinkedList<Integer> data;
+    private LinkedList<Integer> data;
     private final Worker[] workers;
     private final Thread[] thWorkers;
     private int nMined = 0;
@@ -12,35 +9,20 @@ public class Foreman {
     private final Transport tr;
 
     public Foreman(int cWorker, int tWorker, Transport tr) {
-        this.data = new LinkedList<>();
         this.workers = new Worker[cWorker];
         this.thWorkers = new Thread[cWorker];
         this.tWorker = tWorker;
         this.tr = tr;
     }
 
-    public void getBlocks(String filePath) {
+    public void getBlocks() {
         System.out.println("Foreman - Loading data.");
-        int blocks = 0;
-        int ores = 0;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] sources = line.split(" ");
-                blocks += sources.length;
-                for (String source : sources) {
-                    data.add(source.length());
-                    ores += source.length();
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Foreman - Could not read from file.");
-            System.exit(1);
-        }
+        data = Main.getData().loadData();
+        Main.getData().writeData("Foreman;0;blocks=" + Main.getData().getBlocks() + " " + "ores=" + Main.getData().getOres());
 
         System.out.println("Foreman - Done loading data.");
-        System.out.println("Foreman - Mine has " + blocks + " blocks and " + ores + " ores.");
+        System.out.println("Foreman - Mine has " + Main.getData().getBlocks() + " blocks and " + Main.getData().getOres() + " ores.");
     }
 
     public void work() {
