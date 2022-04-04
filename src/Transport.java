@@ -21,9 +21,8 @@ public class Transport {
     public synchronized void loadLorry(int id) {
         System.out.println("Worker " + id + " - loading ore.");
 
-        //TODO 1 sec loading from worker
         try {
-            Thread.sleep(1000);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
