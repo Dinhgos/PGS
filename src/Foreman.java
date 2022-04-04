@@ -8,7 +8,6 @@ public class Foreman {
     private final Worker[] workers;
     private final Thread[] thWorkers;
     private int nMined = 0;
-    private static int ores = 0;
     private final int tWorker;
     private final Transport tr;
 
@@ -66,9 +65,6 @@ public class Foreman {
         tr.setLastLorry(true);
         tr.lastLorry();
 
-        System.out.println("Foreman - Printing result.");
-        // TODO foreman cant print result
-        //printResult();
         System.out.println("Foreman - Done working.");
     }
 
@@ -82,20 +78,6 @@ public class Foreman {
         }
 
         System.out.println("Worker " + workerId + " - No more jobs available.");
-        // TODO last worker should tell last load
-        //tr.setLastLorry(true);
         return -1;
-    }
-
-    // TODO someone else report result to foreman
-    public synchronized void reportResult(int results, int workerId) {
-        System.out.println("Worker " + workerId + " - Reporting result.");
-        ores += results;
-    }
-
-    // TODO print the right result
-    private void printResult() {
-        System.out.println("Total amount of ores - " + tr.getFerry().getResult());
-        System.out.println("Total amount of ores - " + tr.getCounterTest());
     }
 }

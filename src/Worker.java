@@ -33,16 +33,13 @@ public class Worker implements Runnable {
                     e.printStackTrace();
                 }
             }
-            // TODO loading lorry
-            jobCount++;
 
+            jobCount++;
             System.out.println("Worker " + id + " - Mined " + job + " ores.");
 
             for (int i = 0; i < job; i++) {
                 tr.loadLorry(id);
             }
-
-            //foreman.reportResult(job, id);
         }
 
         System.out.println("Worker " + id + " - Mined " + jobCount + " blocks.");
