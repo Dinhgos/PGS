@@ -22,13 +22,17 @@ public class Foreman {
 
     public void getBlocks(String filePath) {
         System.out.println("Foreman - Loading data.");
+        int blocks = 0;
+        int ores = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] sources = line.split(" ");
+                blocks += sources.length;
                 for (String source : sources) {
                     data.add(source.length());
+                    ores += source.length();
                 }
             }
         } catch (IOException e) {
@@ -37,6 +41,7 @@ public class Foreman {
         }
 
         System.out.println("Foreman - Done loading data.");
+        System.out.println("Foreman - Mine has " + blocks + " blocks and " + ores + " ores.");
     }
 
     public void work() {
@@ -58,8 +63,12 @@ public class Foreman {
             }
         }
 
+        tr.setLastLorry(true);
+        tr.lastLorry();
+
         System.out.println("Foreman - Printing result.");
-        printResult();
+        // TODO foreman cant print result
+        //printResult();
         System.out.println("Foreman - Done working.");
     }
 
@@ -73,15 +82,20 @@ public class Foreman {
         }
 
         System.out.println("Worker " + workerId + " - No more jobs available.");
+        // TODO last worker should tell last load
+        //tr.setLastLorry(true);
         return -1;
     }
 
+    // TODO someone else report result to foreman
     public synchronized void reportResult(int results, int workerId) {
         System.out.println("Worker " + workerId + " - Reporting result.");
         ores += results;
     }
 
+    // TODO print the right result
     private void printResult() {
-        System.out.println("Total amount of ores - " + ores);
+        System.out.println("Total amount of ores - " + tr.getFerry().getResult());
+        System.out.println("Total amount of ores - " + tr.getCounterTest());
     }
 }
