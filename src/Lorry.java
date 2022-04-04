@@ -1,11 +1,10 @@
 import java.util.Random;
-import java.util.Spliterators;
 
 public class Lorry implements Runnable {
     private final int id;
     private final int capLorry;
     private final int tLorry;
-    private Ferry ferry;
+    private final Ferry ferry;
     private int curCap = 0;
 
     public Lorry(int id, int capLorry, int tLorry, Ferry ferry) {
@@ -29,33 +28,16 @@ public class Lorry implements Runnable {
             e.printStackTrace();
         }
 
-        // TODO load what ?
-        // TODO do it better
-        ferry.load(curCap);
-        if (ferry.isFull()) {
-            ferry.unLoad();
-        }
+        ferry.synchronize(curCap);
     }
 
-    // TODO maybe sync
-    public boolean isFull() {
+    public synchronized boolean incCap() {
+        this.curCap++;
+
         if (curCap == capLorry) {
             return true;
         }
 
         return false;
     }
-
-    public void incCap() {
-        this.curCap++;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getCurCap() {
-        return curCap;
-    }
-
 }

@@ -1,39 +1,49 @@
 public class Ferry {
-    private int id;
-    private final int maxCap;
-    private int curCap;
-    private int counterTest = 0;
+    private final int capFerry;
+    private int counter = 0;
+    private double sum = 0;
+    private boolean sleep = true;
 
-    // TODO dont know
-    private final Barrier barrier = new Barrier(5);
-
-    public Ferry(int id, int maxCap) {
-        this.id = id;
-        this.maxCap = maxCap;
-        this.curCap = 0;
+    public Ferry(int capFerry) {
+        this.capFerry = capFerry;
     }
 
-    public void load(int ld) {
-        this.curCap += ld;
-    }
+    public synchronized void synchronize(int load) {
+        sum += load;
 
-    public boolean isFull() {
-        if (curCap == maxCap) {
-            return true;
+        while (sleep == false) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-        return false;
-    }
+        counter++;
 
-    public void unLoad() {
-        // TODO this shit
-        barrier.synchronizujBezpecne();
-        id++;
-        curCap = 0;
-    }
+        if (counter == capFerry) {
+            System.out.println("---------------------------------------------------------------------");
+            System.out.println("Ferry - With " + sum);
 
-    // TODO fix result to not be ID
-    public int getResult() {
-        return id;
+            sum = 0;
+            sleep = false;
+
+            notifyAll();
+        }
+
+        while (sleep == true) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        counter--;
+
+        if (counter == 0) {
+            sleep = true;
+            notifyAll();
+        }
     }
 }
