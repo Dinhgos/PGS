@@ -5,8 +5,6 @@ public class Worker implements Runnable {
     private final int tWorker;
     private final Foreman foreman;
     private final Transport tr;
-    // TODO make better lorry (spread to other workers)
-    private Lorry lorry;
 
     public Worker(int id, int tWorker, Foreman foreman, Transport tr) {
         this.id = id;
@@ -38,15 +36,16 @@ public class Worker implements Runnable {
             // TODO loading lorry
             jobCount++;
 
+            System.out.println("Worker " + id + " - Mined " + job + " ores.");
+
             for (int i = 0; i < job; i++) {
-                tr.loadLorry();
+                tr.loadLorry(id);
             }
 
-            foreman.reportResult(job, id);
-            System.out.println("Worker " + id + " - Mined " + job + " ores.");
+            //foreman.reportResult(job, id);
         }
 
-        System.out.println("Worker " + id + " - Done mining " + jobCount + " blocks.");
+        System.out.println("Worker " + id + " - Mined " + jobCount + " blocks.");
     }
 
     public int getWorkerID() {
