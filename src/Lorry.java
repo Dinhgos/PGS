@@ -3,7 +3,7 @@ import java.util.Random;
 /**
  * lorry waits for workers to fill its capacity the goes to ferry
  * @author Xuan Toan Dinh
- * @version 05.04.2022
+ * @version 01.05.2022
  */
 public class Lorry implements Runnable {
     /** ID of lorry */
@@ -66,8 +66,14 @@ public class Lorry implements Runnable {
         time = endTime - startTime;
         Main.getData().writeData("Lorry;" + id + ";go;" + time);
 
+        startTime = System.currentTimeMillis();
+
         // lorry waiting at ferry
         ferry.synchronize(curCap);
+
+        endTime = System.currentTimeMillis();
+        time = endTime - startTime;
+        Main.getData().writeData("Lorry;" + id + ";ferry;" + time);
 
         // ferry is done lorry goes too
         startTime = System.currentTimeMillis();

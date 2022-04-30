@@ -3,7 +3,7 @@ import java.util.Random;
 /**
  * mines ores and loads lorry
  * @author Xuan Toan Dinh
- * @version 05.04.2022
+ * @version 01.05.2022
  */
 public class Worker implements Runnable {
     /** ID of the worker */
@@ -52,6 +52,8 @@ public class Worker implements Runnable {
 
             // mines ores
             for (int i = 0; i < job; i++) {
+                long startTime2 = System.currentTimeMillis();
+
                 wSpeed = rand.nextInt(maxR);
                 try {
                     Thread.sleep(wSpeed);
@@ -62,7 +64,7 @@ public class Worker implements Runnable {
 
                 // writes into output
                 endTime = System.currentTimeMillis();
-                time = endTime - startTime;
+                time = endTime - startTime2;
                 Main.getData().writeData("Worker;" + id + ";ore;" + time);
             }
 
