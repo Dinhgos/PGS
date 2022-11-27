@@ -2,7 +2,7 @@
  * ferry holds of lorrys until the capacity is reached
  * it uses barier function to hold lorrys and prevent them from spurious wakeup
  * @author Xuan Toan Dinh
- * @version 01.05.2022
+ * @version 05.04.2022
  */
 public class Ferry {
     /** maximal cappacity of lorry */
@@ -18,7 +18,7 @@ public class Ferry {
     private boolean sleep = true;
 
     /** starting time of ferry -> how long ferry has been waiting */
-    private long startTime;
+    private final long startTime;
 
     /** number of ferrys departed */
     private int couFer = 0;
@@ -64,8 +64,6 @@ public class Ferry {
 
             sleep = false;
             notifyAll();
-
-            this.startTime = System.currentTimeMillis();
         }
 
         while (sleep) {

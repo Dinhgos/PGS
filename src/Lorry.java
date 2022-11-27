@@ -3,7 +3,7 @@ import java.util.Random;
 /**
  * lorry waits for workers to fill its capacity the goes to ferry
  * @author Xuan Toan Dinh
- * @version 02.05.2022
+ * @version 05.04.2022
  */
 public class Lorry implements Runnable {
     /** ID of lorry */

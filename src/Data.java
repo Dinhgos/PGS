@@ -4,7 +4,7 @@ import java.util.LinkedList;
 /**
  * Data class handles reading from input file, writing to output file and creating of output file
  * @author Xuan Toan Dinh
- * @version 02.05.2022
+ * @version 05.04.2022
  */
 public class Data {
     /** amount of blocks in input */
@@ -41,7 +41,6 @@ public class Data {
             String line;
             while ((line = br.readLine()) != null) {
                 // splits line into array of string to get number of words/blocks
-                line = line.replaceAll("\\s+"," ");
                 String[] sources = line.split(" ");
                 blocks += sources.length;
 
